@@ -1,0 +1,78 @@
+.header {
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  padding: 0px 20px;
+  position: relative; //為了配合headerSearchBar的absolute
+  .headerContainer {
+    color: white;
+    width: 100%;
+    max-width: 1024px;
+    // background-color: rgb(104, 104, 248); //你可以用這個看container範圍
+    // container 不包括df 要讓 title des 自由往下排列
+    margin: 20px 0px 100px 0px; //margin 四個為上 左 下 右
+    .headerTitle {
+      font-size: 45px;
+    }
+    .headerDes {
+      margin-top: 10px;
+    }
+    .headerSearchBar {
+      height: 55px;
+      width: 100%;
+      max-width: 1024px;
+      display: flex;
+      align-items: center;
+      background-color: rgb(223, 130, 0);
+      border: none;
+      border-radius: 5px;
+      position: absolute;
+      bottom: -30px;
+      svg {
+        //特別注意這邊fontawsome是svg檔，所以可以在這邊控制全部icon屬性
+        color: lightgray;
+        font-size: 24px;
+        margin-left: 10px;
+      }
+      input {
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 16px;
+        text-overflow: ellipsis; //特殊用法要搭配下面width
+        //他字數超過框框時可以從“你要去哪裡？”變成“你要去...”這樣就不會超出版型
+      }
+      .searchBarItem:first-child {
+        width: calc(34% - 20px);
+      }
+      .searchBarItem {
+        height: 50px;
+        width: 320px;
+        margin-left: 2px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: black;
+        background-color: #fff;
+        border-radius: 2px;
+        cursor: pointer;
+        .calendar {
+          position: absolute; //這邊一樣用絕對定位讓他超出container往下
+          top: 56px;
+          border: 1px lightgray solid;
+          box-shadow: 0px 0px 15px lightgray;
+        } //box-shadow增加陰影與邊線
+      }
+      .searchBarBtn {
+        border: none;
+        margin: 0px 2px 0px 2px;
+        width: 60px;
+        height: 50px;
+        border-radius: 2px;
+        background-color: var(--primary-color);
+        color: white;
+        cursor: pointer;
+      }
+    }
+  }
+}
