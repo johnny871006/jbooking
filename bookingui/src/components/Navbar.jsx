@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import "./navbar.scss";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -15,7 +16,9 @@ const Navbar = () => {
       <div className="navbarContainer">
         <div className="lineOne">
           <div className="left">
-            <span className="logo">J.Booking</span>
+            <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+              <span className="logo">J.Booking</span>
+            </Link>
           </div>
           <div className="right">
             <buton className="navButtonFlag" />

@@ -12,12 +12,36 @@ import * as locales from "react-date-range/dist/locale";
 //用它來叫出不同版本的語言翻譯，把日曆換成中文
 import { DateRange } from "react-date-range";
 import format from "date-fns/format";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Header = () => {
+  const [destination, setDestination] = useState("");
   const [openCalendar, setOpenCalendar] = useState(false);
   const [dates, setDates] = useState([
     { startDate: new Date(), endDate: new Date(), key: "selection" },
   ]);
+  const [openConditions, setOpenConditions] = useState(false);
+  const [conditions, setConditions] = useState({
+    adult: 1,
+    children: 0,
+    room: 1,
+  });
+  const handleCounter = (name, sign) => {
+    //導入得變數name是判斷adult,children還是room哪一個要加減
+    //並用sign來判斷是加還是剪
+    //用setConditions進來 上傳condition的數量
+    setConditions((prev) => {
+      //previous的縮寫
+      return {
+        ...prev, //一定要三個點，這個代表可以累加
+        //adult: 1,  [adult]:value
+        [name]:
+          sign === "increase" ? conditions[name] + 1 : conditions[name] - 1,
+      };
+    });
+  };
+  console.log(destination, dates, conditions);
 
   return (
     <div className="header">
@@ -34,6 +58,7 @@ const Header = () => {
               className="searchInput"
               type="search"
               placeholder="你要去哪裡?"
+              onChange={(e) => setDestination(e.target.value)}
             />
           </div>
           <div className="searchBarItem">
@@ -63,8 +88,95 @@ const Header = () => {
             )}
           </div>
           <div className="searchBarItem">
-            <FontAwesomeIcon icon={faPeopleGroup}></FontAwesomeIcon>
-            <span className="searchText">3位成人，2位小孩，一間房</span>
+            <FontAwesomeIcon
+              icon={faPeopleGroup}
+              onClick={() => {
+                setOpenConditions(!openConditions);
+              }}
+            />
+            <span
+              className="searchText"
+              onClick={() => {
+                setOpenConditions(!openConditions);
+              }}
+            >
+              {conditions.adult}位成人， {conditions.children}位小孩，
+              {conditions.room}間房
+            </span>
+            {openConditions && (
+              <div className="conditionsContainer">
+                <div className="condition">
+                  成人
+                  <div className="conditionCounter">
+                    <button
+                      className="conditionCounterBtn"
+                      disabled={conditions.adult <= 1}
+                      onClick={() => handleCounter("adult", "decrease")}
+                    >
+                      {" "}
+                      -{" "}
+                    </button>
+                    <span className="number"> {conditions.adult} </span>
+                    <button
+                      className="conditionCounterBtn"
+                      onClick={() => handleCounter("adult", "increase")}
+                    >
+                      {" "}
+                      +{" "}
+                    </button>
+                  </div>
+                </div>
+                <div className="condition">
+                  <span>
+                    小孩
+                    <p>0-17 歲</p>
+                  </span>
+                  <div className="conditionCounter">
+                    <button
+                      className="conditionCounterBtn"
+                      disabled={conditions.children <= 0}
+                      onClick={() => handleCounter("children", "decrease")}
+                    >
+                      {" "}
+                      -{" "}
+                    </button>
+                    <span className="number"> {conditions.children} </span>
+                    <button
+                      className="conditionCounterBtn"
+                      onClick={() => handleCounter("children", "increase")}
+                    >
+                      {" "}
+                      +{" "}
+                    </button>
+                  </div>
+                </div>
+                <div className="condition">
+                  房間
+                  <div className="conditionCounter">
+                    <button
+                      className="conditionCounterBtn"
+                      disabled={conditions.room <= 1}
+                      onClick={() => {
+                        handleCounter("room", "decrease");
+                      }}
+                    >
+                      {" "}
+                      -{" "}
+                    </button>
+                    <span className="number"> {conditions.room} </span>
+                    <button
+                      className="conditionCounterBtn"
+                      onClick={() => {
+                        handleCounter("room", "increase");
+                      }}
+                    >
+                      {" "}
+                      +{" "}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <button className="searchBarBtn">搜尋</button>
         </div>

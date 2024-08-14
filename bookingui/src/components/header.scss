@@ -60,8 +60,50 @@
           position: absolute; //這邊一樣用絕對定位讓他超出container往下
           top: 56px;
           border: 1px lightgray solid;
+          box-shadow: 0px 0px 15px lightgray; //box-shadow增加陰影與邊線
+        }
+        .conditionsContainer {
+          position: absolute;
+          top: 60px;
+          width: auto;
+          background-color: white;
           box-shadow: 0px 0px 15px lightgray;
-        } //box-shadow增加陰影與邊線
+          border-radius: 5px;
+          padding: 10px;
+          cursor: default;
+          .condition {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 250px;
+            height: 50px;
+            p {
+              font-size: 14px;
+              color: gray;
+            }
+            .conditionCounter {
+              display: flex;
+              width: 100px;
+              justify-content: space-between;
+              align-items: center;
+              .conditionCounterBtn {
+                width: 30px;
+                height: 30px;
+                border-radius: 2px;
+                color: var(--primary-color);
+                background-color: white;
+                border: 1px solid var(--primary-color);
+                cursor: pointer;
+                &:hover {
+                  background-color: rgba(53, 164, 127, 0.1);
+                }
+                &:disabled {
+                  cursor: not-allowed;
+                }
+              }
+            }
+          }
+        }
       }
       .searchBarBtn {
         border: none;
